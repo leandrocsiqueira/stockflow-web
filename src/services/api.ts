@@ -1,5 +1,7 @@
 import type { ApiError } from "../types/ApiError";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "/api";
+
 export class ApiException extends Error {
   status: number;
   details: ApiError["details"];
@@ -17,7 +19,7 @@ export async function apiRequest<T>(
   path: string,
   options?: RequestInit,
 ): Promise<T> {
-  const response = await fetch(`/api${path}`, {
+  const response = await fetch(`${API_BASE_URL}${path}`, {
     headers: {
       "Content-Type": "application/json",
       ...options?.headers,
